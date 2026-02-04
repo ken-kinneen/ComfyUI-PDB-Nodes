@@ -1,0 +1,4 @@
+# PyMOL must be installed separately (conda install -c conda-forge pymol-open-source)
+numpy
+torch
+Pillow
