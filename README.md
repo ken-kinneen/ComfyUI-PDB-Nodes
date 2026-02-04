@@ -31,31 +31,25 @@ Selects a file from a newline-separated file list by index.
 
 ## Requirements
 
-- **PyMOL**: Must be installed separately
-  ```bash
-  conda install -c conda-forge pymol-open-source
-  ```
+- Python 3.9+
+- PyMOL (automatically installed via pip)
 
 ## Installation
 
 1. Clone this repo into your ComfyUI `custom_nodes` folder:
    ```bash
    cd ComfyUI/custom_nodes
-   git clone https://github.com/YOUR_USERNAME/ComfyUI-PDB-Nodes.git
+   git clone https://github.com/ken-kinneen/ComfyUI-PDB-Nodes.git
    ```
 
-2. Install requirements:
+2. Install requirements (includes PyMOL):
    ```bash
+   cd ComfyUI-PDB-Nodes
    pip install -r requirements.txt
    ```
 
-3. Install PyMOL (if not already installed):
-   ```bash
-   conda install -c conda-forge pymol-open-source
-   ```
-
-4. Restart ComfyUI
+3. Restart ComfyUI
 
 ## Usage
 
-Set the `PYMOL_BIN` environment variable to your PyMOL binary path, or specify it directly in the node.
+PyMOL is automatically found if installed via pip. You can also set the `PYMOL_BIN` environment variable or specify the path directly in the node.
