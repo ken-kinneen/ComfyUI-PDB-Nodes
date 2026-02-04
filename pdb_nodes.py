@@ -126,7 +126,27 @@ class PDBToImage:
                ambient, spec_count, spec_reflect, shininess, light_count, fog_amount,
                camera, rotate_x, rotate_y, zoom_factor):
 
-        pdb_path = os.path.abspath(os.path.expanduser(os.path.expandvars(str(pdb_path)))).strip()
+        # Handle base64-encoded file input from web UI
+        # Format: base64file://<filename>/<base64content>
+        pdb_path = str(pdb_path).strip()
+        if pdb_path.startswith("base64file://"):
+            import base64
+            # Parse the base64file format
+            parts = pdb_path[len("base64file://"):].split("/", 1)
+            if len(parts) == 2:
+                filename, b64_content = parts
+                # Decode and save to temp file
+                pdb_content = base64.b64decode(b64_content).decode("utf-8")
+                temp_pdb = tempfile.NamedTemporaryFile(mode="w", suffix=".pdb", delete=False)
+                temp_pdb.write(pdb_content)
+                temp_pdb.close()
+                pdb_path = temp_pdb.name
+                print(f"[PDBToImage] Decoded base64 PDB file: {filename} -> {pdb_path}")
+            else:
+                raise ValueError("Invalid base64file format for pdb_path")
+        else:
+            pdb_path = os.path.abspath(os.path.expanduser(os.path.expandvars(pdb_path)))
+        
         if not os.path.isfile(pdb_path):
             raise FileNotFoundError(f"PDB not found: {pdb_path}")
 
